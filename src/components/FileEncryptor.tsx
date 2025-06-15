@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -27,21 +28,19 @@ export default function FileEncryptor() {
   };
 
   const handleEncrypt = () => {
-    if (!fileToEncrypt) {
-      toast.error("Please select a file to encrypt.");
+    if (!fileToEncrypt || !encryptionKey) {
+      toast.error("Please select a file and enter an encryption key.");
       return;
     }
 
     const reader = new FileReader();
     reader.onload = () => {
       const fileData = reader.result as string;
-      const key = CryptoJS.lib.WordArray.random(32); // Generate key as WordArray
-      const encrypted = CryptoJS.AES.encrypt(fileData, key).toString();
+      const encrypted = CryptoJS.AES.encrypt(fileData, encryptionKey).toString();
 
       const blob = new Blob([encrypted], { type: "text/plain" });
       const url = URL.createObjectURL(blob);
 
-      setEncryptionKey(key.toString(CryptoJS.enc.Hex)); // Display key as a hex string
       setEncryptedFileUrl(url);
       setEncryptedFileName(`encrypted-${fileToEncrypt.name}.txt`);
       toast.success("File encrypted successfully!");
@@ -50,18 +49,6 @@ export default function FileEncryptor() {
       toast.error("Failed to read the file.");
     }
     reader.readAsDataURL(fileToEncrypt);
-  };
-
-  const downloadKey = () => {
-    const blob = new Blob([encryptionKey], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "decryption-key.txt";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
   };
 
   const handleFileToDecryptChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,8 +67,7 @@ export default function FileEncryptor() {
     reader.onload = () => {
       try {
         const encryptedData = reader.result as string;
-        const key = CryptoJS.enc.Hex.parse(decryptionKey); // Parse the hex key string
-        const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, key);
+        const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, decryptionKey);
         const decryptedDataUrl = decryptedBytes.toString(CryptoJS.enc.Utf8);
 
         if (!decryptedDataUrl) {
@@ -117,33 +103,30 @@ export default function FileEncryptor() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2"><ShieldCheck /> Encrypt a File</CardTitle>
-          <CardDescription>Upload any file, and we'll encrypt it for you and provide a decryption key.</CardDescription>
+          <CardDescription>Upload a file and provide a password to encrypt it.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label htmlFor="encrypt-file">Select file</Label>
             <Input id="encrypt-file" type="file" onChange={handleFileToEncryptChange} />
           </div>
-          <Button onClick={handleEncrypt} disabled={!fileToEncrypt}>
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="encryption-key">Encryption Key / Password</Label>
+            <Input id="encryption-key" type="password" placeholder="Enter a strong key" value={encryptionKey} onChange={(e) => setEncryptionKey(e.target.value)} />
+          </div>
+          <Button onClick={handleEncrypt} disabled={!fileToEncrypt || !encryptionKey}>
             <Upload className="mr-2" /> Encrypt File
           </Button>
           {encryptedFileUrl && (
             <div className="space-y-4 rounded-md border p-4 animate-fade-in">
               <h3 className="font-semibold">Encryption Successful!</h3>
-              <p className="text-sm text-muted-foreground">Your file is encrypted. Download the encrypted file and your unique decryption key. <strong>Store your key safely! You cannot decrypt your file without it.</strong></p>
+              <p className="text-sm text-muted-foreground">Your file is encrypted. Download the encrypted file. <strong>Remember the key/password you used! You cannot decrypt your file without it.</strong></p>
               <div className="flex flex-wrap gap-4">
                 <a href={encryptedFileUrl} download={encryptedFileName}>
                   <Button variant="secondary">
                     <Download className="mr-2" /> Download Encrypted File
                   </Button>
                 </a>
-                <Button onClick={downloadKey}>
-                  <KeyRound className="mr-2" /> Download Decryption Key
-                </Button>
-              </div>
-              <div className="mt-2">
-                <Label htmlFor="encryptionKeyOutput">Decryption Key</Label>
-                <Input id="encryptionKeyOutput" readOnly value={encryptionKey} className="font-mono" />
               </div>
             </div>
           )}
@@ -161,8 +144,8 @@ export default function FileEncryptor() {
             <Input id="decrypt-file" type="file" accept=".txt" onChange={handleFileToDecryptChange} />
           </div>
           <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="decryption-key">Decryption Key</Label>
-            <Input id="decryption-key" type="text" placeholder="Enter your key" value={decryptionKey} onChange={(e) => setDecryptionKey(e.target.value)} />
+            <Label htmlFor="decryption-key">Decryption Key / Password</Label>
+            <Input id="decryption-key" type="password" placeholder="Enter your key" value={decryptionKey} onChange={(e) => setDecryptionKey(e.target.value)} />
           </div>
           <Button onClick={handleDecrypt} disabled={!fileToDecrypt || !decryptionKey}>
             <Download className="mr-2" /> Decrypt File
