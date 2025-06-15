@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -36,13 +35,13 @@ export default function FileEncryptor() {
     const reader = new FileReader();
     reader.onload = () => {
       const fileData = reader.result as string;
-      const key = CryptoJS.lib.WordArray.random(32).toString(); // 256-bit key
+      const key = CryptoJS.lib.WordArray.random(32); // Generate key as WordArray
       const encrypted = CryptoJS.AES.encrypt(fileData, key).toString();
 
       const blob = new Blob([encrypted], { type: "text/plain" });
       const url = URL.createObjectURL(blob);
 
-      setEncryptionKey(key);
+      setEncryptionKey(key.toString(CryptoJS.enc.Hex)); // Display key as a hex string
       setEncryptedFileUrl(url);
       setEncryptedFileName(`encrypted-${fileToEncrypt.name}.txt`);
       toast.success("File encrypted successfully!");
@@ -81,7 +80,8 @@ export default function FileEncryptor() {
     reader.onload = () => {
       try {
         const encryptedData = reader.result as string;
-        const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, decryptionKey);
+        const key = CryptoJS.enc.Hex.parse(decryptionKey); // Parse the hex key string
+        const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, key);
         const decryptedDataUrl = decryptedBytes.toString(CryptoJS.enc.Utf8);
 
         if (!decryptedDataUrl) {
