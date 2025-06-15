@@ -1,5 +1,5 @@
 
-import { ShieldCheck, Backup, UserCheck, Virus } from "lucide-react";
+import { ShieldCheck, Database, UserCheck, Shield } from "lucide-react";
 import { motion } from "framer-motion";
 
 const techniques = [
@@ -14,12 +14,12 @@ const techniques = [
     desc: "Be cautious with links, attachments, and unknown senders."
   },
   {
-    icon: Backup,
+    icon: Database,
     title: "Regular Backups",
     desc: "Keep offline and cloud backups of important files to reduce impact."
   },
   {
-    icon: Virus,
+    icon: Shield,
     title: "Keep Software Updated",
     desc: "Patch your OS and apps to close security holes exploited by attackers."
   }
