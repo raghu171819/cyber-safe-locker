@@ -38,7 +38,7 @@ export default function FileEncryptor() {
       const fileData = reader.result as string;
       const encrypted = CryptoJS.AES.encrypt(fileData, encryptionKey).toString();
 
-      const blob = new Blob([encrypted], { type: "text/plain" });
+      const blob = new Blob([encrypted], { type: "text/plain;charset=utf-8" });
       const url = URL.createObjectURL(blob);
 
       setEncryptedFileUrl(url);
