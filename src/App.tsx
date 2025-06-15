@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -17,6 +18,7 @@ import RecoveryPanel from "./components/RecoveryPanel";
 import SecurityQuiz from "./components/SecurityQuiz";
 import RiskAssessment from "./components/RiskAssessment";
 import Glossary from "./components/Glossary";
+import FileEncryptor from "./components/FileEncryptor";
 
 const queryClient = new QueryClient();
 
@@ -56,6 +58,7 @@ const App = () => {
                 <Route path="/quiz" element={<SecurityQuiz />} />
                 <Route path="/risk-assessment" element={<RiskAssessment />} />
                 <Route path="/glossary" element={<Glossary />} />
+                <Route path="/file-encryptor" element={<FileEncryptor />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </main>
