@@ -1,6 +1,6 @@
 
 import { Link, useLocation } from "react-router-dom";
-import { ShieldAlert, BookOpen, ArrowUpCircle, LockKeyhole, Undo2, Bug } from "lucide-react";
+import { ShieldAlert, BookOpen, ArrowUpCircle, LockKeyhole, Undo2, Bug, HelpCircle, BarChart3, Search } from "lucide-react";
 
 const navItems = [
   { label: "What is Ransomware?", icon: BookOpen, to: "/what-is-ransomware" },
@@ -9,6 +9,9 @@ const navItems = [
   { label: "Prevention", icon: ShieldAlert, to: "/prevention" },
   { label: "Recovery", icon: Undo2, to: "/recovery" },
   { label: "Simulate Attack", icon: Bug, to: "/simulate" },
+  { label: "Security Quiz", icon: HelpCircle, to: "/quiz" },
+  { label: "Risk Assessment", icon: BarChart3, to: "/risk-assessment" },
+  { label: "Glossary", icon: Search, to: "/glossary" },
 ];
 
 export default function Sidebar() {
