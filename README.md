@@ -1,73 +1,70 @@
-# Welcome to your Lovable project
 
-## Project info
+# RansomAware – Cybersecurity Awareness Web App
 
-**URL**: https://lovable.dev/projects/c4f1e081-2773-46c8-a63f-b7e9c5ea7626
+**RansomAware** is a 100% safe interactive simulation that demonstrates how ransomware attacks appear and how to protect yourself. For classrooms, workshops, demos and portfolios.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 💡 Features
 
-**Use Lovable**
+- **Fake Ransomware Simulation:** Simulates a lock screen—no real encryption!
+- **Educational Panels:** Explains What is Ransomware, How it Spreads, Encryption, Prevention, Recovery (with visuals and Framer Motion).
+- **Decryption Demo:** Enter the right (dummy) key to "unlock" your files.
+- **Dark mode + Responsive Design:** Looks good everywhere.
+- **Legal/Safety Disclaimer:** No files are encrypted or accessed at any time.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c4f1e081-2773-46c8-a63f-b7e9c5ea7626) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🏗️ Setup
 
-**Use your preferred IDE**
+1. **Clone the repo:**
+   ```sh
+   git clone <YOUR_GIT_URL>
+   cd ransomaware
+   ```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+3. **Start the dev server:**
+   ```sh
+   npm run dev
+   ```
 
-Follow these steps:
+4. **Open in browser:**  
+   Visit [http://localhost:5173](http://localhost:5173) (or shown address)
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+---
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## ⚠️ Disclaimer
 
-# Step 3: Install the necessary dependencies.
-npm i
+> This application is for educational and awareness purposes only.  
+> **It never encrypts, deletes, or accesses any files or sensitive data.**  
+> DO NOT use this knowledge to create or distribute real malware.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+---
 
-**Edit a file directly in GitHub**
+## 🛠️ Tech Stack
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- React, Vite, TypeScript, Tailwind CSS, shadcn/ui, Framer Motion, Lucide Icons
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📦 File Structure
 
-## What technologies are used for this project?
+- `src/components/SimulateRansomware.tsx` – Lock screen simulation
+- `src/components/DecryptSimulation.tsx` – Decrypt screen
+- `src/components/Sidebar.tsx` – Navigation/sidebar
+- `src/components/WhatIsRansomware.tsx`, etc – Educational panels
+- `src/data/ransomNote.json` – Fake ransom note
 
-This project is built with:
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🎨 Credits
 
-## How can I deploy this project?
+- Icons: Lucide
+- Animations: Framer Motion
+- UI Kit: shadcn/ui
 
-Simply open [Lovable](https://lovable.dev/projects/c4f1e081-2773-46c8-a63f-b7e9c5ea7626) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
